@@ -1,0 +1,64 @@
+Metadata-Version: 2.4
+Name: vending-machine
+Version: 0.0.0
+Summary: Minimal VendingMachine package for learning
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
+vendingMachine
+
+Small Python OOP example project: a minimal `VendingMachine` package with tests.
+
+Setup
+-----
+
+1. Create a virtual environment and activate it
+
+   Windows PowerShell:
+
+   ```powershell
+   python -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   ```
+
+2. Install dev/test requirements
+
+```powershell
+pip install -r requirements.txt
+```
+
+Run tests
+---------
+
+```powershell
+pytest -q
+```
+
+Quick usage
+-----------
+
+```python
+from vending_machine import VendingMachine
+
+vm = VendingMachine({"soda": (1.5, 5)})
+vm.deposit(2.0)
+print(vm.select("soda"))
+```
+
+Project layout
+--------------
+
+Root files:
+
+- `requirements.txt` — test requirements
+- `.gitignore` — common Python ignores
+
+Code and tests:
+
+- `src/vending_machine/` — package code
+- `tests/` — pytest tests
+
+Notes
+-----
+
+This repository is intentionally small and focused on a clean, testable OOP layout. Add more modules under `src/vending_machine` and corresponding tests under `tests/` as the project grows.
