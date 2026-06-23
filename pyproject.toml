@@ -1,0 +1,16 @@
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+line-length = 88
+exclude = ["build", "dist", ".venv", "__pycache__"]
+select = ["E", "F", "W", "I"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = ["tests"]
+addopts = "-q"
