@@ -1,3 +1,10 @@
+Metadata-Version: 2.4
+Name: vending-machine
+Version: 0.0.0
+Summary: Minimal VendingMachine package for learning
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
 vendingMachine
 
 Small Python OOP example project: a minimal `VendingMachine` package with tests.
@@ -29,10 +36,14 @@ pytest -q
 
 Quick usage
 -----------
-See easyRun.py
 
-At terminal type:
->> python -m vending_machine.easyRun
+```python
+from vending_machine import VendingMachine
+
+vm = VendingMachine({"soda": (1.5, 5)})
+vm.deposit(2.0)
+print(vm.select("soda"))
+```
 
 Project layout
 --------------

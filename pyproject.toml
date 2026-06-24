@@ -1,3 +1,14 @@
+[project]
+name = "vending-machine"
+version = "0.0.0"
+description = "Minimal VendingMachine package for learning"
+readme = "README.md"
+requires-python = ">=3.8"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [tool.black]
 line-length = 88
 target-version = ["py38"]
@@ -7,7 +18,9 @@ profile = "black"
 
 [tool.ruff]
 line-length = 88
-exclude = ["build", "dist", ".venv", "__pycache__"]
+exclude = ["build", "dist", ".venv", "pycache"]
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "I"]
 
 [tool.pytest.ini_options]
