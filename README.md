@@ -29,14 +29,10 @@ pytest -q
 
 Quick usage
 -----------
+See easyRun.py
 
-```python
-from vending_machine import VendingMachine
-
-vm = VendingMachine({"soda": (1.5, 5)})
-vm.deposit(2.0)
-print(vm.select("soda"))
-```
+At terminal type:
+>> python -m vending_machine.easyRun
 
 Project layout
 --------------
