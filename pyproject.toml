@@ -19,6 +19,8 @@ profile = "black"
 [tool.ruff]
 line-length = 88
 exclude = ["build", "dist", ".venv", "pycache"]
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "I"]
 
 [tool.pytest.ini_options]
