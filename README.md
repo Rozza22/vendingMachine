@@ -29,10 +29,10 @@ pytest -q
 
 Quick usage
 -----------
-See easyRun.py
+Make terminal location .example_runs
 
 At terminal type:
->> python -m vending_machine.easyRun
+>> python <filename>
 
 Project layout
 --------------
