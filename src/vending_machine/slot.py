@@ -34,7 +34,7 @@ class Slot:
         if quantity > self.quantity_in_place:
             raise ValueError(
                 f"Cannot remove {quantity} items; "
-                "only {self.quantity_in_place} available"
+                f"only {self.quantity_in_place} available"
             )
         self.quantity_in_place -= quantity
 
@@ -43,8 +43,8 @@ class Slot:
         return self.quantity_in_place > 0
 
     def sell_item(self) -> str:
-        """Sell one item to a customer. "
-        "Returns a restock alert if stock reaches zero."""
+        """Sell one item to a customer.
+        Returns a restock alert if stock reaches zero."""
         if not self.is_in_stock():
             raise ValueError(f"Cannot sell from slot {self.place_num}: out of stock")
 
@@ -53,7 +53,7 @@ class Slot:
         if self.quantity_in_place == 0:
             message = (
                 f"⚠️ ALERT: Slot {self.place_num} ({self.product_assigned}) "
-                f" needs restock - stock is now empty"
+                "needs restock - stock is now empty"
             )
             return message
 
