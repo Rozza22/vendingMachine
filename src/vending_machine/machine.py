@@ -1,6 +1,10 @@
+from datetime import datetime
+
+from .customer import Customer
 from .money import parse_money
 from .product import Product
 from .slot import Slot
+from .transactions import transactions
 
 
 class VendingMachine:
@@ -59,3 +63,32 @@ class VendingMachine:
 
         slot.add_stock(quantity)
         return slot
+
+    def purchase(self, place_num: int, customer: Customer):
+        if not isinstance(customer, Customer):
+            raise TypeError("Customer must be a Customer instance")
+
+        slot = self.get_slot(place_num)
+
+        if not slot.is_in_stock():
+            raise ValueError(f"Slot {place_num} is out of stock")
+
+        sale_price = slot.product_assigned.sell_price
+        if customer.balance < sale_price:
+            raise ValueError("Insufficient balance")
+
+        slot.sell_item()
+        change = customer.balance - sale_price
+        customer.balance = change
+        self.balance += sale_price
+
+        transaction = transactions(
+            datetime.now(),
+            slot,
+            customer.balance + sale_price,
+            sale_price,
+            slot.product_assigned.unit_stock_cost,
+            change,
+        )
+
+        return transaction
