@@ -4,10 +4,8 @@ class Slot:
     def __init__(self, place_num: int, product_assigned, quantity_in_place: int):
         if not isinstance(place_num, int) or place_num < 0:
             raise ValueError("Slot position must be a non-negative integer")
-        if not isinstance(quantity_in_place, int) or quantity_in_place <= 0:
+        if not isinstance(quantity_in_place, int) or quantity_in_place < 0:
             raise ValueError("Quantity in place must be a non-negative integer")
-        if product_assigned is None:
-            raise ValueError("Product assigned cannot be None")
         if quantity_in_place > self.MAX_CAPACITY:
             raise ValueError("Slot capacity cannot exceed 10")
 

@@ -34,6 +34,12 @@ def test_slot_creation_with_string_product():
     assert slot.quantity_in_place == 5
 
 
+def test_slot_creation_allows_zero_quantity(sample_product):
+    """Test that an empty slot can be created before stock is loaded."""
+    slot = Slot(place_num=2, product_assigned=sample_product, quantity_in_place=0)
+    assert slot.quantity_in_place == 0
+
+
 def test_slot_creation_exceeds_capacity(sample_product):
     """Test that a slot cannot be created above its capacity."""
     with pytest.raises(ValueError, match="Slot capacity cannot exceed 10"):
@@ -84,10 +90,12 @@ def test_slot_invalid_quantity_type(bad_quantity, sample_product):
         )
 
 
-def test_slot_none_product():
-    """Test that None product is rejected."""
-    with pytest.raises(ValueError, match="Product assigned cannot be None"):
-        Slot(place_num=1, product_assigned=None, quantity_in_place=10)
+def test_slot_none_product_allows_empty_slot_setup():
+    """Test that an empty slot can be created before a product is assigned."""
+    slot = Slot(place_num=1, product_assigned=None, quantity_in_place=0)
+    assert slot.place_num == 1
+    assert slot.product_assigned is None
+    assert slot.quantity_in_place == 0
 
 
 # ==================== add_stock Tests ====================
