@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from .customer import Customer
+from .metrics import Metrics
 from .money import parse_money
 from .product import Product
 from .slot import Slot
@@ -13,6 +14,7 @@ class VendingMachine:
     def __init__(self, balance=0):
         self.balance = balance
         self.slots = {}
+        self.metrics = Metrics()
 
     def deposit(self, amount):
         amt = parse_money(amount)
@@ -62,6 +64,9 @@ class VendingMachine:
             slot.product_assigned = product
 
         slot.add_stock(quantity)
+        self.metrics.add_stock_investment(
+            quantity, slot.product_assigned.unit_stock_cost
+        )
         return slot
 
     def purchase(self, place_num: int, customer: Customer):
@@ -81,6 +86,8 @@ class VendingMachine:
         change = customer.balance - sale_price
         customer.balance = change
         self.balance += sale_price
+        self.metrics.add_sales(sale_price)
+        self.metrics.add_cogs(slot.product_assigned.unit_stock_cost)
 
         transaction = transactions(
             datetime.now(),
