@@ -1,4 +1,5 @@
+from .cli import VendingMachineCLI
 from .machine import VendingMachine
 from .product import Product
 
-__all__ = ["VendingMachine", "Product"]
+__all__ = ["VendingMachine", "Product", "VendingMachineCLI"]

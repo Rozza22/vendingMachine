@@ -13,6 +13,17 @@ def sample_product():
     return Product("Soda", "1.50", "0.50")
 
 
+def test_machine_starts_with_all_slots_registered():
+    machine = VendingMachine()
+
+    assert len(machine.slots) == VendingMachine.MAX_SLOT_NUMBER
+    assert machine.get_slot(1).place_num == 1
+    assert (
+        machine.get_slot(VendingMachine.MAX_SLOT_NUMBER).place_num
+        == VendingMachine.MAX_SLOT_NUMBER
+    )
+
+
 def test_machine_can_register_and_retrieve_slots(sample_product):
     machine = VendingMachine()
     slot = Slot(1, sample_product, 0)
@@ -63,8 +74,8 @@ def test_machine_rejects_invalid_slot_type():
 def test_machine_rejects_unknown_slot_lookup():
     machine = VendingMachine()
 
-    with pytest.raises(ValueError, match="does not exist"):
-        machine.get_slot(5)
+    with pytest.raises(ValueError, match="cannot exceed 48"):
+        machine.get_slot(49)
 
 
 def test_machine_can_load_product_and_quantity_into_slot(sample_product):
@@ -129,8 +140,8 @@ def test_machine_purchase_rejects_invalid_slot(sample_product):
     machine = VendingMachine()
     customer = Customer("2.00")
 
-    with pytest.raises(ValueError, match="does not exist"):
-        machine.purchase(1, customer)
+    with pytest.raises(ValueError, match="cannot exceed 48"):
+        machine.purchase(49, customer)
 
 
 def test_machine_purchase_rejects_out_of_stock(sample_product):

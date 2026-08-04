@@ -15,6 +15,14 @@ class VendingMachine:
         self.balance = balance
         self.slots = {}
         self.metrics = Metrics()
+        self._initialize_slots()
+
+    def _initialize_slots(self) -> None:
+        for place_num in range(1, self.MAX_SLOT_NUMBER + 1):
+            self.add_slot(Slot(place_num, None, 0))
+
+    def _is_default_slot(self, slot: Slot) -> bool:
+        return slot.product_assigned is None and slot.quantity_in_place == 0
 
     def deposit(self, amount):
         amt = parse_money(amount)
@@ -36,6 +44,10 @@ class VendingMachine:
 
         place_num = self._validate_place_num(slot.place_num)
         if place_num in self.slots:
+            existing_slot = self.slots[place_num]
+            if self._is_default_slot(existing_slot):
+                self.slots[place_num] = slot
+                return
             raise ValueError(f"Slot {place_num} already exists / in-use")
 
         self.slots[place_num] = slot
