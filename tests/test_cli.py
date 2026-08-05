@@ -26,7 +26,7 @@ def test_cli_can_show_inventory_for_registered_slots(capsys):
     output = capsys.readouterr().out
     assert "Slot 1" in output
     assert "Soda" in output
-    assert "stock: 2" in output
+    assert "(2)" in output
 
 
 def test_cli_restock_creates_product_and_allows_purchase(monkeypatch):

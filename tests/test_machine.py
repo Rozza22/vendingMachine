@@ -33,27 +33,31 @@ def test_machine_can_register_and_retrieve_slots(sample_product):
     assert machine.get_slot(1) is slot
 
 
-def test_machine_allows_slot_number_48(sample_product):
+def test_machine_allows_slot_number_MAX_SLOT_NUMBER(sample_product):
     machine = VendingMachine()
-    slot = Slot(48, sample_product, 0)
+    slot = Slot(VendingMachine.MAX_SLOT_NUMBER, sample_product, 0)
 
     machine.add_slot(slot)
 
-    assert machine.get_slot(48) is slot
+    assert machine.get_slot(VendingMachine.MAX_SLOT_NUMBER) is slot
 
 
 def test_machine_rejects_slot_number_above_max_on_add(sample_product):
     machine = VendingMachine()
 
-    with pytest.raises(ValueError, match="cannot exceed 48"):
-        machine.add_slot(Slot(49, sample_product, 0))
+    with pytest.raises(
+        ValueError, match=f"cannot exceed {VendingMachine.MAX_SLOT_NUMBER}"
+    ):
+        machine.add_slot(Slot(VendingMachine.MAX_SLOT_NUMBER + 1, sample_product, 0))
 
 
 def test_machine_rejects_slot_number_above_max_on_lookup():
     machine = VendingMachine()
 
-    with pytest.raises(ValueError, match="cannot exceed 48"):
-        machine.get_slot(49)
+    with pytest.raises(
+        ValueError, match=f"cannot exceed {VendingMachine.MAX_SLOT_NUMBER}"
+    ):
+        machine.get_slot(VendingMachine.MAX_SLOT_NUMBER + 1)
 
 
 def test_machine_rejects_duplicate_slot_registration(sample_product):
@@ -74,8 +78,10 @@ def test_machine_rejects_invalid_slot_type():
 def test_machine_rejects_unknown_slot_lookup():
     machine = VendingMachine()
 
-    with pytest.raises(ValueError, match="cannot exceed 48"):
-        machine.get_slot(49)
+    with pytest.raises(
+        ValueError, match=f"cannot exceed {VendingMachine.MAX_SLOT_NUMBER}"
+    ):
+        machine.get_slot(VendingMachine.MAX_SLOT_NUMBER + 1)
 
 
 def test_machine_can_load_product_and_quantity_into_slot(sample_product):
@@ -140,8 +146,10 @@ def test_machine_purchase_rejects_invalid_slot(sample_product):
     machine = VendingMachine()
     customer = Customer("2.00")
 
-    with pytest.raises(ValueError, match="cannot exceed 48"):
-        machine.purchase(49, customer)
+    with pytest.raises(
+        ValueError, match=f"cannot exceed {VendingMachine.MAX_SLOT_NUMBER}"
+    ):
+        machine.purchase(VendingMachine.MAX_SLOT_NUMBER + 1, customer)
 
 
 def test_machine_purchase_rejects_out_of_stock(sample_product):
