@@ -119,13 +119,26 @@ class VendingMachineCLI:
             print("No slots registered.")
             return
 
-        for place_num, slot in sorted(self.machine.slots.items()):
+        for i, (place_num, slot) in enumerate(
+            sorted(self.machine.slots.items()), start=1
+        ):
             product_name = (
                 slot.product_assigned.name
                 if slot.product_assigned is not None
                 else "Empty"
             )
-            print(f"Slot {place_num}: {product_name} | stock: {slot.quantity_in_place}")
+
+            print(
+                f"Slot {place_num}: {product_name}" f"({slot.quantity_in_place})",
+                end="\t\t",
+            )
+
+            if i % 4 == 0:
+                print()  # Start a new line after every 6 slots
+
+        # Ensure the final line ends with a newline
+        if len(self.machine.slots) % 6 != 0:
+            print()
 
     def insert_money(self) -> None:
         try:

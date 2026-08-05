@@ -9,7 +9,7 @@ from .transactions import transactions
 
 
 class VendingMachine:
-    MAX_SLOT_NUMBER = 48
+    MAX_SLOT_NUMBER = 24
 
     def __init__(self, balance=0):
         self.balance = balance
