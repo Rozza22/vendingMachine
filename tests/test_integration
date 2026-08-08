@@ -1,0 +1,63 @@
+# tests/test_integration.py
+import pytest
+
+from decimal import Decimal
+from vending_machine.machine import VendingMachine
+from vending_machine.customer import Customer
+from vending_machine.product import Product
+from vending_machine.slot import Slot
+
+
+def test_e2e_restock_then_multiple_purchases():
+    """Restock a slot and complete multiple purchases."""
+    machine = VendingMachine()
+    customer = Customer("10.00")
+    
+    # Restock slot 1 with Soda
+    soda = Product("Soda", "2.00", "0.50")
+    machine.load_slot(1, soda, 3)
+    
+    # First purchase
+    customer.pay("2.00")  # or however your pay method works
+    machine.purchase(1, customer)
+    assert machine.get_slot(1).quantity_in_place == 2
+    
+    # Second purchase
+    customer.pay("2.00")
+    machine.purchase(1, customer)
+    assert machine.get_slot(1).quantity_in_place == 1
+
+
+def test_e2e_invalid_purchase_branches():
+    """Test invalid purchase scenarios."""
+    machine = VendingMachine()
+    customer = Customer("2.00")
+    
+    # Try purchasing from empty slot
+    soda = Product("Soda", "2.00", "0.50")
+    machine.load_slot(1, soda, 0)
+    
+    with pytest.raises(ValueError):
+        machine.purchase(1, customer)
+    
+    # Try purchasing with insufficient funds
+    customer = Customer("1.00")
+    machine.load_slot(2, soda, 1)
+    
+    with pytest.raises(ValueError):
+        machine.purchase(2, customer)
+
+
+def test_e2e_refund_and_balance_reset():
+    """Test refund flow and balance reset."""
+    machine = VendingMachine()
+    customer = Customer("5.00")
+    
+    # Deposit money
+    initial_balance = customer.balance
+    
+    # Request refund
+    refunded = customer.refund()
+    
+    assert refunded == initial_balance
+    assert customer.balance == Decimal("0.00")
