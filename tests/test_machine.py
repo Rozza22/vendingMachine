@@ -160,3 +160,17 @@ def test_machine_purchase_rejects_out_of_stock(sample_product):
 
     with pytest.raises(ValueError, match="out of stock"):
         machine.purchase(7, customer)
+
+
+def test_machine_purchase_adds_transaction_history(sample_product):
+    machine = VendingMachine()
+    slot = Slot(8, sample_product, 6)
+    machine.add_slot(slot)
+    customer = Customer("10")
+    machine.transactions_history = [object(), object()]
+
+    initial_count = len(machine.transactions_history)
+
+    machine.purchase(8, customer)
+
+    assert len(machine.transactions_history) == initial_count + 1

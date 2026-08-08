@@ -42,7 +42,8 @@ class VendingMachineCLI:
         print("4. Refund")
         print("5. Restock")
         print("6. Report")
-        print("7. Back")
+        print("7. Full Inventory Report")
+        print("8. Back")
 
     def handle_master_choice(self, choice: str) -> bool:
         try:
@@ -108,6 +109,8 @@ class VendingMachineCLI:
         elif option == 6:
             self.report()
         elif option == 7:
+            self.inventory_report()
+        elif option == 8:
             return False
         else:
             print("Invalid choice.")
@@ -122,19 +125,25 @@ class VendingMachineCLI:
         for i, (place_num, slot) in enumerate(
             sorted(self.machine.slots.items()), start=1
         ):
-            product_name = (
-                slot.product_assigned.name
-                if slot.product_assigned is not None
-                else "Empty"
-            )
+            product = slot.product_assigned
+
+            if product is not None:
+                product_name = product.name
+                sell_price = product.sell_price
+
+            else:
+                product_name = "Empty"
+                sell_price = "Empty"
 
             print(
-                f"Slot {place_num}: {product_name}" f"({slot.quantity_in_place})",
+                f"Slot {place_num}: {product_name}"
+                f"({slot.quantity_in_place})"
+                f" Price: £{sell_price}",
                 end="\t\t",
             )
 
-            if i % 4 == 0:
-                print()  # Start a new line after every 6 slots
+            # if i % 4 == 0:
+            #     print()
 
         # Ensure the final line ends with a newline
         if len(self.machine.slots) % 6 != 0:
@@ -177,7 +186,39 @@ class VendingMachineCLI:
         except (ValueError, TypeError) as exc:
             print(f"Error: {exc}")
 
+    def inventory_report(self) -> None:
+        if not self.machine.slots:
+            print("No slots registered.")
+            return
+
+        print("Inventory Report")
+        print("-" * 70)
+        print(
+            f"{'Slot':<8}{'Product':<15}{'Sell Price':<15}"
+            f"{'Stock Cost':<15}{'Quantity':<10}"
+        )
+        print("-" * 70)
+
+        for place_num, slot in sorted(self.machine.slots.items()):
+            if slot.product_assigned is not None:
+                product_name = slot.product_assigned.name
+                sell_price = slot.product_assigned.sell_price
+                stock_cost = slot.product_assigned.unit_stock_cost
+            else:
+                product_name = "Empty"
+                sell_price = "-"
+                stock_cost = "-"
+
+            print(
+                f"{place_num:<8}"
+                f"{product_name:<15}"
+                f"{sell_price:<15}"
+                f"{stock_cost:<15}"
+                f"{slot.quantity_in_place:<10}"
+            )
+
     def report(self) -> None:
+        print("Transaction count:", len(self.machine.transactions_history))
         print("Sales total:", self.machine.metrics.sales_total)
         print("Stock investment total:", self.machine.metrics.stock_investment_total)
         print("COGS total:", self.machine.metrics.cogs_total)

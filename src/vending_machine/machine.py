@@ -16,6 +16,7 @@ class VendingMachine:
         self.slots = {}
         self.metrics = Metrics()
         self._initialize_slots()
+        self.transactions_history = []
 
     def _initialize_slots(self) -> None:
         for place_num in range(1, self.MAX_SLOT_NUMBER + 1):
@@ -109,5 +110,7 @@ class VendingMachine:
             slot.product_assigned.unit_stock_cost,
             change,
         )
+
+        self.transactions_history.append(transaction)
 
         return transaction
