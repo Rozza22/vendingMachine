@@ -1,0 +1,4 @@
+slot,product,sell_price,unit_stock_cost,quantity
+1,Coke,1.50,0.40,10
+2,Twix,2.00,0.50,10
+3,Lucky Strike,20.00,10.00,10

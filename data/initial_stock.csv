@@ -1,0 +1,25 @@
+slot,product,sell_price,unit_stock_cost,quantity
+1,Coke,1.50,0.40,10
+2,Twix,2.00,0.50,10
+3,Lucky Strike,20.00,10.00,10
+4,Pepsi,1.50,0.40,10
+5,KitKat,1.80,0.45,10
+6,Water,1.00,0.20,10
+7,Sprite,1.50,0.40,10
+8,Snickers,2.00,0.55,10
+9,Marlboro,18.00,9.00,10
+10,Fanta,1.50,0.40,10
+11,Maltesers,1.80,0.50,10
+12,Red Bull,2.50,1.20,10
+13,Dr Pepper,1.50,0.40,10
+14,Mars Bar,1.80,0.50,10
+15,Benson & Hedges,17.00,8.50,10
+16,7UP,1.50,0.40,10
+17,Galaxy,1.80,0.50,10
+18,Monster,2.50,1.20,10
+19,Mountain Dew,1.50,0.45,10
+20,Milky Way,1.80,0.50,10
+21,Silk Cut,18.00,9.00,10
+22,Irn Bru,1.50,0.40,10
+23,Haribo,1.50,0.45,10
+24,Lucozade,2.00,0.90,10

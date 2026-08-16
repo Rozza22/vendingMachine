@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Optional
 
 from .customer import Customer
+from .loader import load_machine_from_csv
 from .machine import VendingMachine
 from .product import Product
 
@@ -247,7 +248,11 @@ class VendingMachineCLI:
 
 
 def main() -> None:
-    cli = VendingMachineCLI()
+    machine = VendingMachine()
+
+    load_machine_from_csv("data/initial_stock.csv", machine)
+
+    cli = VendingMachineCLI(machine)
     cli.run()
 
 
