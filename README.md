@@ -34,6 +34,13 @@ Make terminal location .example_runs
 At terminal type:
 >> python <filename>
 
+CLI Menu
+--------------
+Run the following:
+>> python -m vending_machine.cli
+
+You will need to enter Admin menu first to stock some products before being able to simulate customer purchases using the Customer menu
+
 Project layout
 --------------
 
@@ -46,6 +53,11 @@ Code and tests:
 
 - `src/vending_machine/` — package code
 - `tests/` — pytest tests
+
+Metrics:
+- Gross Profit is the amount of money incoming to the vending machine through sales
+- Stock Investment is the amount of money spent on stock
+- Transaction history contains all customer purchases and the details on these
 
 Notes
 -----
